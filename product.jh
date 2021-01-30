@@ -1,0 +1,63 @@
+
+entity Product {
+	productId Long required
+    name String
+    price Float
+    img String
+    isDeleted Boolean
+}
+
+entity Customer {
+	customerId Long required
+    name String
+    adress1 String
+    adress2 String
+    adress3 String
+}
+
+entity Order {
+	orderId Long required
+	customerId Long required
+	productId Long required
+	orderStatusId Long required
+    totalAmout Float
+}
+
+entity OrderStatus {
+	orderStatusId Long required
+    name String
+}
+
+entity OrderLine {
+	orderLineId Long required
+	orderId Long required
+    productId Long required
+    quantity Integer
+}
+
+enum Language {
+    FRENCH, ENGLISH
+}
+
+relationship ManyToOne {
+	Order{orderStatusId} to OrderStatus
+}
+relationship ManyToOne {
+	Customer{orderId} to Order
+}
+
+relationship OneToMany {
+	OrderLine{orderId} to Order
+}
+
+relationship ManyToMany {
+	Order{orderId} to Product
+}
+
+// defining multiple oneToOne relationships
+relationship OneToOne {
+	JobHistory{job} to Job,
+	JobHistory{department} to Department,
+	JobHistory{employee} to Employee
+}
+
